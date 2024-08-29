@@ -15,7 +15,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
 
   String _selectedCountryCode = "+00";
   bool _isPasswordVisible = false;
@@ -26,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         final response = await Dio().post(
           'http://recipe.flutterwithakmaljon.uz/api/register',
           data: {
-            'full_name': _fullNameController.text,
+            'name': _fullNameController.text,
             'phone': '${_selectedCountryCode}${_phoneController.text}',
             'email': _emailController.text,
             'password': _passwordController.text,
@@ -35,42 +36,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
 
         if (response.statusCode == 200 && response.data['token'] != null) {
-          String token = response.data['token'];
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', token);
-
-          Navigator.push(
+          // Navigate to the NextScreen upon successful registration
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const NextScreen()),
           );
         } else {
-          String errorMessage = response.data['message'] ?? 'Registration failed';
+          String errorMessage =
+              response.data['message'] ?? 'Registration failed';
+          if (response.data['data'] != null) {
+            errorMessage += ': ${response.data['data'].toString()}';
+          }
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(errorMessage)),
           );
         }
       } catch (e) {
-        if (e is DioError) {
-          if (e.response != null) {
-            String errorMessage = e.response!.data['message'] ?? 'Unknown error';
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Registration failed: $errorMessage')),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('No internet connection')),
-            );
+        if (e is DioException) {
+          String errorMessage = e.response?.data['message'] ?? 'Unknown error';
+          if (e.response?.data['data'] != null) {
+            errorMessage += ': ${e.response?.data['data'].toString()}';
           }
-        } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Unexpected error: $e')),
+            SnackBar(content: Text('Registration failed: $errorMessage')),
           );
         }
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fix the errors in the form')),
+        const SnackBar(content: Text('Please fix the errors in the form')),
       );
     }
   }
