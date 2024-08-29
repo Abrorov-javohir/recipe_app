@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/ui/screens/splash/splash_screen1.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_app/bloc/register_bloc.dart';
+import 'package:recipe_app/ui/screens/auth/register/register_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen1(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RegisterBloc>(
+          create: (context) => RegisterBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        home: const RegisterScreen(),
+      ),
     );
   }
 }

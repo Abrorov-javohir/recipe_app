@@ -9,20 +9,56 @@ class SplashScreen2 extends StatefulWidget {
 }
 
 class _SplashScreen2State extends State<SplashScreen2> {
-  final PageController _pageController = PageController();
+  final List<SplashPageData> _pages = const [
+    SplashPageData(
+      image: "assets/image/carrisa-gan.png",
+      title: "Share Your Recipes",
+      description: "Lorem ipsum dolor sit amet, consectetur elit.",
+    ),
+    SplashPageData(
+      image: "assets/image/fathul.png",
+      title: "Cook with Friends",
+      description: "Share and enjoy recipes with friends.",
+    ),
+    SplashPageData(
+      image: "assets/image/brooke.png",
+      title: "Discover New Flavors",
+      description: "Explore new recipes and cooking methods.",
+    ),
+  ];
+
   int _currentPage = 0;
+  double _opacity = 1.0;
 
   @override
   void initState() {
     super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page?.round() ?? 0;
-      });
+    _startPageTimer();
+  }
+
+  void _startPageTimer() {
+    Future.delayed(const Duration(seconds: 3), () {
+      _fadeOutAndNextPage();
     });
   }
 
-  void _onLastPage() {
+  void _fadeOutAndNextPage() {
+    setState(() => _opacity = 0.0);
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (_currentPage < _pages.length - 1) {
+        setState(() {
+          _currentPage++;
+          _opacity = 1.0;
+          _startPageTimer();
+        });
+      } else {
+        _navigateToRegisterScreen();
+      }
+    });
+  }
+
+  void _navigateToRegisterScreen() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const BeginRegisterScreen()),
@@ -34,38 +70,19 @@ class _SplashScreen2State extends State<SplashScreen2> {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              if (index == 2) {
-                // Assuming the last page index is 2
-                _onLastPage();
-              }
-            },
-            children: const [
-              SplashPage(
-                image: "assets/image/carrisa-gan.png",
-                title: "Share Your Recipes",
-                description: "Lorem ipsum dolor sit amet, consectetur elit.",
-              ),
-              SplashPage(
-                image: "assets/image/fathul.png",
-                title: "Cook with Friends",
-                description: "Share and enjoy recipes with friends.",
-              ),
-              SplashPage(
-                image: "assets/image/brooke.png",
-                title: "Discover New Flavors",
-                description: "Explore new recipes and cooking methods.",
-              ),
-            ],
+          AnimatedOpacity(
+            opacity: _opacity,
+            duration: const Duration(milliseconds: 500),
+            child: SplashPage(
+              data: _pages[_currentPage],
+            ),
           ),
           Positioned(
             bottom: 50,
             left: 20,
             right: 20,
             child: LinearProgressIndicator(
-              value: (_currentPage + 1) / 3,
+              value: (_currentPage + 1) / _pages.length,
               backgroundColor: Colors.grey[300],
               color: Colors.teal,
               minHeight: 5,
@@ -77,57 +94,63 @@ class _SplashScreen2State extends State<SplashScreen2> {
   }
 }
 
-class SplashPage extends StatelessWidget {
+class SplashPageData {
   final String image;
   final String title;
   final String description;
 
-  const SplashPage({
-    Key? key,
+  const SplashPageData({
     required this.image,
     required this.title,
     required this.description,
+  });
+}
+
+class SplashPage extends StatelessWidget {
+  final SplashPageData data;
+
+  const SplashPage({
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(image),
-              fit: BoxFit.cover,
-            ),
+        Positioned.fill(
+          child: Image.asset(
+            data.image,
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high, // Yaxshi sifatli tasvir
           ),
         ),
         Container(
-          color: Colors.black54, // Semi-transparent overlay
+          color: Colors.black54, // Yarim shaffof qoplama
         ),
         Positioned(
-          top: 500, // Adjust this value as needed
+          top: MediaQuery.of(context).size.height *
+              0.65, // Moslashtirilgan pozitsiya
           left: 20,
           right: 20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
-                style: TextStyle(
+                data.title,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.left,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
-                description,
-                style: TextStyle(
+                data.description,
+                style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 16, // Matnning katta o'lchami
                 ),
-                textAlign: TextAlign.left,
               ),
             ],
           ),
