@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_app/bloc/login_bloc.dart';
-import 'package:recipe_app/bloc/register_bloc.dart';
-import 'package:recipe_app/ui/screens/auth/register/register_screen.dart';
+import 'package:recipe_app/bloc/auth/auth_bloc.dart';
+import 'package:recipe_app/core/di/di.dart';
+import 'package:recipe_app/data/repositories/auth_repository.dart';
+import 'package:recipe_app/data/repositories/user_repository.dart';
 import 'package:recipe_app/ui/screens/splash/splash_screen1.dart';
-import 'package:dio/dio.dart'; // Dio importini qo'shing agar kerak bo'lsa
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dependencyInit();
   runApp(MyApp());
 }
 
@@ -15,11 +17,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RegisterBloc>(
-          create: (context) => RegisterBloc(),
-        ),
-        BlocProvider<LoginBloc>(
-          create: (context) => LoginBloc(Dio()), // Dio ni kiriting agar kerak bo'lsa
+        BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: getIt.get<AuthRepository>(),
+            userRepository: getIt.get<UserRepository>(),
+          ),
         ),
       ],
       child: MaterialApp(
