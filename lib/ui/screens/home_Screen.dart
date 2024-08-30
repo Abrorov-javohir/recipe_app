@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       const SearchScreen(),
       const AddScreen(),
       const NotificationsActiveScreen(),
-      ProfileScreen(user: user), // Pass the user object here
+      ProfileScreen(
+        userId: 1,
+      ), // Pass the user object here
     ];
   }
 

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_app/bloc/auth/auth_bloc.dart';
 import 'package:recipe_app/data/models/user/user.dart';
-import 'package:recipe_app/ui/screens/edit_profile_screen.dart'; // Import Bloc package
+import 'package:recipe_app/ui/screens/edit_profile_screen.dart';
+import 'package:recipe_app/ui/widgets/building_settings_option.dart';
 
 class SettingsScreen extends StatefulWidget {
   final User user;
@@ -48,9 +49,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   ClipOval(
                     child: FutureBuilder<bool>(
-                      future: File(_currentUser.photo!).exists(),
+                      future: _currentUser.photo != null
+                          ? File(_currentUser.photo!).exists()
+                          : Future.value(false),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         } else if (snapshot.hasError || !snapshot.data!) {
                           return const Icon(Icons.person, size: 60);
@@ -79,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         Text(
-                          'San Francisco, CA',
+                          _currentUser.email,
                           style: const TextStyle(color: Colors.white70),
                         ),
                       ],
@@ -91,7 +95,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditProfileScreen(user: _currentUser),
+                          builder: (context) =>
+                              EditProfileScreen(user: _currentUser),
                         ),
                       ).then((updatedUser) {
                         if (updatedUser != null) {
@@ -109,38 +114,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // Settings Options
             Expanded(
               child: ListView(
-                children: [
-                  _buildSettingOption('Information'),
-                  _buildSettingOption('Notification'),
-
-                  _buildSettingOption('Privacy'),
-                  _buildSettingOption('Support'),
-                  _buildSettingOption('Logout', isLogout: true), // Indicate logout option
+                children: const [
+                  BuildingSettingsOption(
+                    title: 'Information',
+                  ),
+                  BuildingSettingsOption(
+                    title: 'Notification',
+                  ),
+                  BuildingSettingsOption(
+                    title: 'Privacy',
+                  ),
+                  BuildingSettingsOption(
+                    title: 'Support',
+                  ),
+                  BuildingSettingsOption(
+                    isLogout: true,
+                    title: 'Logout',
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildSettingOption(String title, {bool isLogout = false}) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: ListTile(
-        title: Text(title),
-        trailing: const Icon(Icons.arrow_forward),
-        onTap: () async {
-          if (isLogout) {
-            // Handle logout
-            context.read<AuthBloc>().add(LogoutAuthEvent());
-            Navigator.pop(context); // Navigate back to the previous screen
-          } else {
-            // Handle other settings options
-            // You can navigate to different screens or show dialogs here
-          }
-        },
       ),
     );
   }

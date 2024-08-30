@@ -87,7 +87,6 @@ class RegisterScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const Spacer(),
                   SizedBox(
                     width: double.maxFinite,
                     child: BlocBuilder<AuthBloc, AuthState>(

@@ -1,12 +1,11 @@
-
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:recipe_app/core/network/dio_client.dart';
 import 'package:recipe_app/data/repositories/auth_repository.dart';
+import 'package:recipe_app/data/repositories/user_repository.dart';
 import 'package:recipe_app/data/services.dart/auth_api_service.dart';
 import 'package:recipe_app/data/services.dart/auth_local_service.dart';
 import 'package:recipe_app/data/services.dart/user_service.dart';
-import 'package:recipe_app/repository/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -31,7 +30,7 @@ Future<void> dependencyInit() async {
 
   getIt.registerSingleton(
     UserRepository(
-      // userService: getIt.get<UserService>(),
+      userService: getIt.get<UserService>(),
     ),
   );
 }

@@ -1,26 +1,47 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/models/user/user.dart';
+import 'package:recipe_app/data/services.dart/user_service.dart';
 import 'package:recipe_app/ui/screens/edit_profile_screen.dart';
 import 'package:recipe_app/ui/screens/setting_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final User user;
+  final int userId;
 
-  const ProfileScreen({super.key, required this.user});
+  const ProfileScreen({super.key, required this.userId});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late User _user;
+  late UserService _userService;
+  User? _user;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _user = widget.user; // Initialize user
+    _userService = UserService();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final user = await _userService.getUser();
+      setState(() {
+        _user = user;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to load user data")),
+      );
+    }
   }
 
   void _updateUser(User updatedUser) {
@@ -31,17 +52,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_user == null) {
+      return const Center(child: Text("User not found"));
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // Profile Card at the top
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/profile_bacground.png"),
+                image: AssetImage("assets/image/profile_bacground.png"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -55,19 +83,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             child: Column(
               children: [
-                // Profile Picture
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: _user.photo != null
-                      ? FileImage(File(_user.photo!))
+                  backgroundImage:
+                      (_user!.photo != null && _user!.photo!.isNotEmpty)
+                          ? (Uri.tryParse(_user!.photo!)?.isAbsolute == true
+                              ? NetworkImage(_user!.photo!)
+                              : (File(_user!.photo!).existsSync()
+                                  ? FileImage(File(_user!.photo!))
+                                  : null))
+                          : null,
+                  child: (_user!.photo == null || _user!.photo!.isEmpty)
+                      ? const Icon(Icons.camera_alt)
                       : null,
-                  child:
-                      _user.photo == null ? const Icon(Icons.camera_alt) : null,
                 ),
                 const SizedBox(height: 10),
-                // Name
                 Text(
-                  _user.name,
+                  _user!.name,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
@@ -75,10 +107,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                // Location
-                const Text(
-                  'San Francisco, CA',
-                  style: TextStyle(
+                Text(
+                  _user!.email,
+                  style: const TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
                   ),
@@ -95,11 +126,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                EditProfileScreen(user: _user),
+                                EditProfileScreen(user: _user!),
                           ),
                         );
                         if (updatedUser != null) {
-                          _updateUser(updatedUser); // Update user if not null
+                          _updateUser(updatedUser);
                         }
                       },
                     ),
@@ -109,11 +140,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         final updatedUser = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SettingsScreen(user: _user),
+                            builder: (context) => SettingsScreen(user: _user!),
                           ),
                         );
                         if (updatedUser != null) {
-                          _updateUser(updatedUser); // Update user if not null
+                          _updateUser(updatedUser);
                         }
                       },
                     ),
@@ -122,8 +153,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          // Spacer to fill the remaining space
-          const Spacer(),
         ],
       ),
     );

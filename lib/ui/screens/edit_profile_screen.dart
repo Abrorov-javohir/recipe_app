@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/data/models/user/user.dart';
+import 'package:recipe_app/data/services.dart/user_service.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final User user;
@@ -17,13 +17,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
   late TextEditingController _nameController;
-  late TextEditingController _locationController;
+  late TextEditingController _emailController;
+
+  final UserService _userService = UserService();
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.user.name);
-    _locationController = TextEditingController(text: widget.user.phone);
+    _emailController = TextEditingController(text: widget.user.email);
   }
 
   Future<void> _pickImage() async {
@@ -35,17 +37,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  void _saveProfile() {
+  Future<void> _saveProfile() async {
     final updatedUser = User(
       id: widget.user.id,
       name: _nameController.text,
-      email: widget.user.email,
+      email: _emailController.text,
       phone: widget.user.phone,
       photo: _image?.path,
     );
 
-    print('Updated User: ${updatedUser.toMap()}');
-    Navigator.pop(context, updatedUser);
+    try {
+      await _userService.updateUser(updatedUser);
+      Navigator.pop(context, updatedUser);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error updating profile: $e')),
+      );
+    }
   }
 
   @override
@@ -104,9 +112,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             const SizedBox(height: 20),
             TextField(
-              controller: _locationController,
+              controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Location',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -116,7 +124,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: const Text('Save'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               ),
             ),
           ],

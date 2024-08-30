@@ -5,12 +5,18 @@ class NotificationsActiveScreen extends StatefulWidget {
   const NotificationsActiveScreen({super.key});
 
   @override
-  State<NotificationsActiveScreen> createState() => _NotificationsActiveScreenState();
+  State<NotificationsActiveScreen> createState() =>
+      _NotificationsActiveScreenState();
 }
 
 class _NotificationsActiveScreenState extends State<NotificationsActiveScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Center(
+        child: Text("Notification Screen"),
+      ),
+    );
   }
 }

@@ -8,6 +8,8 @@ class DioClient {
   DioClient({required Dio dio}) {
     _dio = dio;
     _dio.options.baseUrl = "http://recipe.flutterwithakmaljon.uz/api";
+    print(_dio.options);
+
     _dio.interceptors.add(NetworkInterceptor());
   }
 
@@ -19,6 +21,9 @@ class NetworkInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final authLocalService = getIt.get<AuthLocalService>();
     final token = authLocalService.getToken();
+
+    print("------------------------------------Token:  ${token}");
+    print("+++++++++++++++++++++++${options.uri}");
 
     if (token != null) {
       options.headers = {
