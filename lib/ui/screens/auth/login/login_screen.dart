@@ -5,6 +5,7 @@ import 'package:recipe_app/bloc/auth/auth_bloc.dart';
 import 'package:recipe_app/data/models/auth/login_request.dart';
 import 'package:recipe_app/data/models/user/user.dart';
 import 'package:recipe_app/ui/screens/home_Screen.dart';
+import 'package:recipe_app/ui/screens/setup_accaount.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -23,7 +24,7 @@ class LoginScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) {
-              return const HomeScreen();
+              return const CountryFood();
             }),
             (route) => false,
           );
@@ -80,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
-                            : const Text('Register'),
+                            : const Text('Login'),
                       );
                     },
                   ),

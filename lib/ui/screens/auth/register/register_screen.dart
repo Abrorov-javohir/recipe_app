@@ -4,6 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:recipe_app/bloc/auth/auth_bloc.dart';
 import 'package:recipe_app/data/models/auth/register_request.dart';
 import 'package:recipe_app/ui/screens/home_Screen.dart';
+import 'package:recipe_app/ui/screens/setup_accaount.dart';
 
 class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -25,7 +26,7 @@ class RegisterScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) {
-              return const HomeScreen();
+              return const CountryFood();
             }),
             (route) => false,
           );

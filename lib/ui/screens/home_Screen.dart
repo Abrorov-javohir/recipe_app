@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/models/user/user.dart';
 import 'package:recipe_app/ui/screens/add_screen.dart';
+import 'package:recipe_app/ui/screens/home_content.dart';
 import 'package:recipe_app/ui/screens/notification_screen.dart';
 import 'package:recipe_app/ui/screens/profile_screen.dart';
 import 'package:recipe_app/ui/screens/search_screen.dart';
@@ -91,15 +92,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-}
-
-// Placeholder screen for home content
-class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Home Screen"));
   }
 }
