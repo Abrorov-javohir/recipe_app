@@ -1,8 +1,13 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:recipe_app/core/gen/assets.gen.dart';
+import 'package:recipe_app/core/navigation/router.gr.dart';
 import 'package:recipe_app/ui/screens/auth/login/login_screen.dart';
 import 'package:recipe_app/ui/screens/auth/register/register_screen.dart';
 
+@RoutePage()
 class BeginRegisterScreen extends StatefulWidget {
   const BeginRegisterScreen({super.key});
 
@@ -21,7 +26,8 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    "assets/image/for_register.png"), // Replace with your image
+                  "assets/image/for_register.png",
+                ), // Replace with your image
                 fit: BoxFit.cover,
               ),
             ),
@@ -71,14 +77,16 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return RegisterScreen();
-                            },
-                          ),
-                        );
+                        context.router.replace(LoginRoute());
+
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return RegisterScreen();
+                        //     },
+                        //   ),
+                        // );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff3FB4B1),
@@ -111,8 +119,7 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
                                   const Color(0xff3FB4B1).withOpacity(0.4),
                               minimumSize: const Size(152, 60),
                             ),
-                            child: SvgPicture.asset(
-                                "assets/svg/google.svg"), // Corrected
+                            child: Assets.svg.google.svg(),
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -126,8 +133,7 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
                                   const Color(0xff3FB4B1).withOpacity(0.4),
                               minimumSize: const Size(152, 60),
                             ),
-                            child: SvgPicture.asset(
-                                "assets/svg/apple.svg"), // Corrected
+                            child: Assets.svg.apple.svg(),
                           ),
                         ),
                       ],
@@ -139,14 +145,16 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
                         const Text("Have an acount?"),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return LoginScreen();
-                                },
-                              ),
-                            );
+                            context.router.replace(LoginRoute());
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) {
+                            //       return LoginScreen();
+                            //     },
+                            //   ),
+                            // );
                           },
                           child: const Text(
                             "Login",

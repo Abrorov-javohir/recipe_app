@@ -1,6 +1,12 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/core/gen/assets.gen.dart';
+import 'package:recipe_app/core/navigation/router.dart';
+import 'package:recipe_app/core/navigation/router.gr.dart';
 import 'package:recipe_app/ui/screens/splash/splash_screen2.dart';
 
+@RoutePage()
 class SplashScreen1 extends StatefulWidget {
   const SplashScreen1({super.key});
 
@@ -30,12 +36,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  color: Colors.white,
-                  "assets/image/meals_on_demand_picture.png",
-                  width: 300,
-                  height: 200,
-                ),
+                Assets.image.mealsOnDemandPicture.image(),
                 const Text(
                   "Meals On \n Demand",
                   style: TextStyle(
@@ -58,12 +59,13 @@ class _SplashScreen1State extends State<SplashScreen1> {
                     )),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => const SplashScreen2(),
-                      ),
-                    );
+                    context.router.replace(SplashRoute2());
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (ctx) => const SplashScreen2(),
+                    //   ),
+                    // );
                   },
                   child: const Text(
                     "Let's start",

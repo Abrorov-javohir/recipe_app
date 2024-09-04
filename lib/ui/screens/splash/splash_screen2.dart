@@ -1,6 +1,10 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/core/navigation/router.gr.dart';
 import 'package:recipe_app/ui/screens/auth/register/begin_register_screen.dart';
 
+@RoutePage()
 class SplashScreen2 extends StatefulWidget {
   const SplashScreen2({super.key});
 
@@ -59,10 +63,12 @@ class _SplashScreen2State extends State<SplashScreen2> {
   }
 
   void _navigateToRegisterScreen() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const BeginRegisterScreen()),
-    );
+    context.router.replace(BeginRegisterRoute());
+
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const BeginRegisterScreen()),
+    // );
   }
 
   @override

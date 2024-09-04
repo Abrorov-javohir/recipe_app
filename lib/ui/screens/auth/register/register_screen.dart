@@ -1,11 +1,15 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:recipe_app/bloc/auth/auth_bloc.dart';
+import 'package:recipe_app/core/navigation/router.gr.dart';
 import 'package:recipe_app/data/models/auth/register_request.dart';
 import 'package:recipe_app/ui/screens/home_Screen.dart';
 import 'package:recipe_app/ui/screens/setup_accaount.dart';
 
+@RoutePage()
 class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
@@ -23,13 +27,15 @@ class RegisterScreen extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthenticatedAuthState) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return const CountryFood();
-            }),
-            (route) => false,
-          );
+          context.router.replace(HomeRoute());
+
+          // Navigator.pushAndRemoveUntil(
+          //   context,
+          //   MaterialPageRoute(builder: (context) {
+          //     return const HomeScreen();
+          //   }),
+          //   (route) => false,
+          // );
         }
       },
       child: Scaffold(

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/models/user/user.dart';
 import 'package:recipe_app/ui/screens/add_screen.dart';
@@ -6,6 +7,7 @@ import 'package:recipe_app/ui/screens/notification_screen.dart';
 import 'package:recipe_app/ui/screens/profile_screen.dart';
 import 'package:recipe_app/ui/screens/search_screen.dart';
 
+@RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
