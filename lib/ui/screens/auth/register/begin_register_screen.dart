@@ -1,11 +1,7 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:recipe_app/core/gen/assets.gen.dart';
 import 'package:recipe_app/core/navigation/router.gr.dart';
-import 'package:recipe_app/ui/screens/auth/login/login_screen.dart';
-import 'package:recipe_app/ui/screens/auth/register/register_screen.dart';
 
 @RoutePage()
 class BeginRegisterScreen extends StatefulWidget {
@@ -89,7 +85,7 @@ class _BeginRegisterScreenState extends State<BeginRegisterScreen> {
                         // );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff3FB4B1),
+                        backgroundColor: const Color(0xff3FB4B1),
                         minimumSize: const Size(double.infinity, 50),
                       ),
                       child: const Row(

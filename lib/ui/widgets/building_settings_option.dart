@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_app/bloc/auth/auth_bloc.dart';
-import 'package:recipe_app/ui/screens/auth/login/login_screen.dart';
 import 'package:recipe_app/ui/screens/auth/register/begin_register_screen.dart'; // Import qilish
 
 class BuildingSettingsOption extends StatelessWidget {

@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_app/bloc/auth/auth_bloc.dart';
 import 'package:recipe_app/data/models/user/user.dart';
 import 'package:recipe_app/ui/screens/edit_profile_screen.dart';
 import 'package:recipe_app/ui/widgets/building_settings_option.dart';

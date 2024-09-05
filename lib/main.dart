@@ -6,7 +6,6 @@ import 'package:recipe_app/core/di/di.dart';
 import 'package:recipe_app/core/navigation/router.dart';
 import 'package:recipe_app/data/repositories/auth_repository.dart';
 import 'package:recipe_app/data/repositories/user_repository.dart';
-import 'package:recipe_app/ui/screens/splash/splash_screen1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

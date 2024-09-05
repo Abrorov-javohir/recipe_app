@@ -1,5 +1,5 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -7,8 +7,6 @@ import 'package:recipe_app/bloc/auth/auth_bloc.dart';
 import 'package:recipe_app/core/navigation/router.gr.dart';
 import 'package:recipe_app/data/models/auth/login_request.dart';
 import 'package:recipe_app/data/models/user/user.dart';
-import 'package:recipe_app/ui/screens/home_Screen.dart';
-import 'package:recipe_app/ui/screens/setup_accaount.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -23,9 +21,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // TODO: implement listener
         if (state is AuthenticatedAuthState) {
-          context.router.replace(HomeRoute());
+          context.router.replace(const HomeRoute());
 
           // Navigator.pushAndRemoveUntil(
           //   context,
@@ -35,9 +32,15 @@ class LoginScreen extends StatelessWidget {
           //   (route) => false,
           // );
           final User user = state.user;
-          print("Ism: ${user.name}");
-          print("Email: ${user.email}");
-          print("phone: ${user.phone}");
+          if (kDebugMode) {
+            print("Ism: ${user.name}");
+          }
+          if (kDebugMode) {
+            print("Email: ${user.email}");
+          }
+          if (kDebugMode) {
+            print("phone: ${user.phone}");
+          }
         }
       },
       child: Scaffold(
