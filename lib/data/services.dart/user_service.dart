@@ -4,14 +4,14 @@ import 'package:recipe_app/core/network/dio_client.dart';
 import 'package:recipe_app/data/models/user/user.dart';
 
 class UserService {
-  final dio = getIt.get<DioClient>().dio;
+  final Dio dio = getIt.get<DioClient>().dio;
 
   Future<User> getUser() async {
     try {
       final response = await dio.get('/user');
-      return User.fromMap(response.data['data']);
+      return User.fromJson(response.data['data']);
     } on DioException catch (e) {
-      throw (e.response?.data);
+      throw Exception(e.response?.data['message'] ?? 'Failed to load user');
     } catch (e) {
       rethrow;
     }
@@ -19,7 +19,7 @@ class UserService {
 
   Future<void> updateUser(User user) async {
     try {
-      FormData formData = FormData.fromMap({
+      final formData = FormData.fromMap({
         'name': user.name,
         'email': user.email,
         'phone': user.phone,
@@ -28,10 +28,13 @@ class UserService {
             : null,
       });
 
-      await dio.post('http://recipe.flutterwithakmaljon.uz/api/profile/update',
-          data: formData);
+      final response = await dio.post('/profile/update', data: formData);
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update user: ${response.data}');
+      }
     } on DioException catch (e) {
-      throw (e.response?.data);
+      throw Exception(e.response?.data['message'] ?? 'Failed to update user');
     } catch (e) {
       rethrow;
     }

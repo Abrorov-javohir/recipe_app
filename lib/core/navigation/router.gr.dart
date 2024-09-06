@@ -9,7 +9,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/foundation.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 import 'package:recipe_app/main.dart' as _i4;
 import 'package:recipe_app/ui/screens/auth/login/login_screen.dart' as _i3;
 import 'package:recipe_app/ui/screens/auth/register/begin_register_screen.dart'
@@ -116,7 +117,7 @@ class MyApp extends _i8.PageRouteInfo<void> {
 /// [_i5.RegisterScreen]
 class RegisterRoute extends _i8.PageRouteInfo<RegisterRouteArgs> {
   RegisterRoute({
-    _i9.Key? key,
+    _i10.Key? key,
     List<_i8.PageRouteInfo>? children,
   }) : super(
           RegisterRoute.name,
@@ -139,7 +140,7 @@ class RegisterRoute extends _i8.PageRouteInfo<RegisterRouteArgs> {
 class RegisterRouteArgs {
   const RegisterRouteArgs({this.key});
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   @override
   String toString() {

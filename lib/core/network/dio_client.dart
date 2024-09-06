@@ -22,13 +22,11 @@ class NetworkInterceptor extends Interceptor {
     final authLocalService = getIt.get<AuthLocalService>();
     final token = authLocalService.getToken();
 
-    print("------------------------------------Token:  ${token}");
+    print("------------------------------------Token:  $token");
     print("+++++++++++++++++++++++${options.uri}");
 
     if (token != null) {
-      options.headers = {
-        "Authorization": "Bearer $token",
-      };
+      options.headers["Authorization"] = "Bearer $token";
     }
 
     super.onRequest(options, handler);

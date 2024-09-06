@@ -16,22 +16,19 @@ class $AssetsImageGen {
   const $AssetsImageGen();
 
   /// File path: assets/image/background.png
-  AssetGenImage get background =>
-      const AssetGenImage('assets/image/background.png');
+  AssetGenImage get background => const AssetGenImage('assets/image/background.png');
 
   /// File path: assets/image/brooke.png
   AssetGenImage get brooke => const AssetGenImage('assets/image/brooke.png');
 
   /// File path: assets/image/carrisa-gan.png
-  AssetGenImage get carrisaGan =>
-      const AssetGenImage('assets/image/carrisa-gan.png');
+  AssetGenImage get carrisaGan => const AssetGenImage('assets/image/carrisa-gan.png');
 
   /// File path: assets/image/fathul.png
   AssetGenImage get fathul => const AssetGenImage('assets/image/fathul.png');
 
   /// File path: assets/image/for_register.png
-  AssetGenImage get forRegister =>
-      const AssetGenImage('assets/image/for_register.png');
+  AssetGenImage get forRegister => const AssetGenImage('assets/image/for_register.png');
 
   /// File path: assets/image/girl.png
   AssetGenImage get girl => const AssetGenImage('assets/image/girl.png');
@@ -44,8 +41,7 @@ class $AssetsImageGen {
   AssetGenImage get profile => const AssetGenImage('assets/image/profile.png');
 
   /// File path: assets/image/profile_bacground.png
-  AssetGenImage get profileBacground =>
-      const AssetGenImage('assets/image/profile_bacground.png');
+  AssetGenImage get profileBacground => const AssetGenImage('assets/image/profile_bacground.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -65,11 +61,13 @@ class $AssetsSvgGen {
   const $AssetsSvgGen();
 
   /// File path: assets/svg/akkaunt_preference.svg
-  SvgGenImage get akkauntPreference =>
-      const SvgGenImage('assets/svg/akkaunt_preference.svg');
+  SvgGenImage get akkauntPreference => const SvgGenImage('assets/svg/akkaunt_preference.svg');
 
   /// File path: assets/svg/apple.svg
   SvgGenImage get apple => const SvgGenImage('assets/svg/apple.svg');
+
+  /// File path: assets/svg/category.svg
+  SvgGenImage get category => const SvgGenImage('assets/svg/category.svg');
 
   /// File path: assets/svg/chicken.svg
   SvgGenImage get chicken => const SvgGenImage('assets/svg/chicken.svg');
@@ -97,12 +95,12 @@ class $AssetsSvgGen {
 
   /// File path: assets/svg/taco.svg
   SvgGenImage get taco => const SvgGenImage('assets/svg/taco.svg');
-  SvgGenImage get category => const SvgGenImage('assets/svg/category.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
         akkauntPreference,
         apple,
+        category,
         chicken,
         cookie,
         google,
@@ -268,8 +266,7 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ??
-          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      colorFilter: colorFilter ?? (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );

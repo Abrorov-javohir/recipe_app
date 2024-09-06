@@ -1,22 +1,21 @@
-import 'package:recipe_app/core/di/di.dart';
+import 'package:hive/hive.dart';
 import 'package:recipe_app/data/models/auth/auth_response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthLocalService {
-  final _authKey = "tokenData";
+  final Box<String> _box = Hive.box<String>('auth');
 
-  Future<void> saveToken(AuthResponse auth) async {
-    final prefs = getIt.get<SharedPreferences>();
-    await prefs.setString(_authKey, auth.token);
+  // Save token from AuthResponse
+  void saveToken(AuthResponse auth) {
+    _box.put('token', auth.token);
   }
 
+  // Retrieve the token
   String? getToken() {
-    final prefs = getIt.get<SharedPreferences>();
-    return prefs.getString(_authKey);
+    return _box.get('token');
   }
 
-  Future<void> deleteToken() async {
-    final prefs = getIt.get<SharedPreferences>();
-    await prefs.remove(_authKey);
+  // Clear the token
+  void clearToken() {
+    _box.delete('token');
   }
 }
