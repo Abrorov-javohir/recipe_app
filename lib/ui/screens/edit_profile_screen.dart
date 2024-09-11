@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/data/models/user/user.dart';
-import 'package:recipe_app/data/services.dart/user_service.dart';
+import 'package:recipe_app/data/services/user_service.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final User user;
@@ -20,6 +20,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _emailController;
 
   final UserService _userService = UserService();
+  bool _isEmailValid(String email) {
+    final RegExp regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return regex.hasMatch(email);
+  }
 
   @override
   void initState() {
@@ -38,6 +42,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _saveProfile() async {
+    if (_nameController.text.isEmpty || _emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Name and email cannot be empty')),
+      );
+      return;
+    }
+
+    if (!_isEmailValid(_emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
     final updatedUser = User(
       id: widget.user.id,
       name: _nameController.text,

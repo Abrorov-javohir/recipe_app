@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const NotificationsActiveScreen(),
       ProfileScreen(
         userId: 1,
-      ), // Pass the user object here
+      ),
     ];
   }
 
@@ -48,11 +48,28 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  String _getAppBarTitle() {
+    switch (_selectedIndex) {
+      case 0:
+        return "Home";
+      case 1:
+        return "Search";
+      case 2:
+        return "Add";
+      case 3:
+        return "Notifications";
+      case 4:
+        return "Profile";
+      default:
+        return "Home";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
+        title: Text(_getAppBarTitle()), // Dynamic title
       ),
       body: _pages[_selectedIndex], // Use the selected page
       bottomNavigationBar: Container(

@@ -49,6 +49,10 @@ dependencies:
   json_annotation: ^4.9.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  firebase_core: ^2.24.2
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: ^7.1.1
+  facebook_auth: ^0.0.3
 
 
 dev_dependencies:

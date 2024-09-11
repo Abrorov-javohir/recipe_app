@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/models/user/user.dart';
-import 'package:recipe_app/data/services.dart/user_service.dart';
+import 'package:recipe_app/data/services/user_service.dart';
 import 'package:recipe_app/ui/screens/edit_profile_screen.dart';
 import 'package:recipe_app/ui/screens/setting_screen.dart';
 
@@ -12,6 +12,7 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.userId});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -86,8 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _isLoading = false;
       });
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to load user data")),
+        const SnackBar(content: Text("Failed to load user data")),
       );
     }
   }
@@ -128,11 +130,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 10,
-                  offset: const Offset(0, 5),
+                  offset: Offset(0, 5),
                 ),
               ],
             ),
@@ -217,10 +219,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   isSelected: selectedCategory == 'Food Recipes',
                   onPressed: () => updateCategory('Food Recipes'),
                 ),
+                SizedBox(
+                  width: 10,
+                ),
                 CategoryTab(
                   label: '📹Live',
                   isSelected: selectedCategory == 'Live',
                   onPressed: () => updateCategory('Live'),
+                ),
+                SizedBox(
+                  width: 10,
                 ),
                 CategoryTab(
                   label: '📷 Galleries',
@@ -264,8 +272,8 @@ class CategoryTab extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +285,7 @@ class CategoryTab extends StatelessWidget {
           color: isSelected ? Colors.green : Colors.white,
           border: Border.all(color: Colors.grey),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Text(
           label,
           style: TextStyle(
@@ -299,8 +307,8 @@ class RecipeCard extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.time,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

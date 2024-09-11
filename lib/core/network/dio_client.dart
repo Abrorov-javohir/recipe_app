@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:recipe_app/core/di/di.dart';
-import 'package:recipe_app/data/services.dart/auth_local_service.dart';
+import 'package:recipe_app/data/services/auth_local_service.dart';
 
 class DioClient {
   late Dio _dio;

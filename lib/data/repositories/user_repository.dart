@@ -1,5 +1,5 @@
 import 'package:recipe_app/data/models/user/user.dart';
-import 'package:recipe_app/data/services.dart/user_service.dart';
+import 'package:recipe_app/data/services/user_service.dart';
 
 class UserRepository {
   final UserService userService;

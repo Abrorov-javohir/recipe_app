@@ -99,11 +99,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   isSelected: selectedCategory == 'Food Recipes',
                   onPressed: () => updateCategory('Food Recipes'),
                 ),
+                SizedBox(width: 10),
                 CategoryTab(
                   label: '📹Live',
                   isSelected: selectedCategory == 'Live',
                   onPressed: () => updateCategory('Live'),
                 ),
+                SizedBox(width: 10),
                 CategoryTab(
                   label: '📷 Galleries',
                   isSelected: selectedCategory == 'Galleries',
@@ -160,7 +162,7 @@ class CategoryTab extends StatelessWidget {
           color: isSelected ? Colors.green : Colors.white,
           border: Border.all(color: Colors.grey),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Text(
           label,
           style: TextStyle(

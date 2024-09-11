@@ -15,3 +15,9 @@ final class RegisterAuthEvent extends AuthEvent {
 }
 
 final class LogoutAuthEvent extends AuthEvent {}
+
+final class SocialLoginAuthEvent extends AuthEvent {
+  final SocialLoginType type;
+
+  SocialLoginAuthEvent(this.type);
+}

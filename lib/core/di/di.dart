@@ -3,9 +3,9 @@ import 'package:get_it/get_it.dart';
 import 'package:recipe_app/core/network/dio_client.dart';
 import 'package:recipe_app/data/repositories/auth_repository.dart';
 import 'package:recipe_app/data/repositories/user_repository.dart';
-import 'package:recipe_app/data/services.dart/auth_api_service.dart';
-import 'package:recipe_app/data/services.dart/auth_local_service.dart';
-import 'package:recipe_app/data/services.dart/user_service.dart';
+import 'package:recipe_app/data/services/auth_api_service.dart';
+import 'package:recipe_app/data/services/auth_local_service.dart';
+import 'package:recipe_app/data/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;

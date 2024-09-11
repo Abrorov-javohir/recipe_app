@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 import 'package:recipe_app/core/di/di.dart';
 import 'package:recipe_app/core/navigation/router.dart';
@@ -16,11 +17,12 @@ Future<void> main() async {
   final documentsDirectory = await getApplicationDocumentsDirectory();
   Hive.init(documentsDirectory.path);
 
-  // "auth" box-ni ochish
+  // "auth" box-ni ochish*
   await Hive.openBox<String>('auth');
 
   // Qaramliklarni ro'yxatdan o'tkazish
   await dependencyInit();
+
 
   runApp(MyApp());
 }
@@ -28,6 +30,8 @@ Future<void> main() async {
 @RoutePage()
 class MyApp extends StatelessWidget {
   final appRouter = AppRouter();
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
